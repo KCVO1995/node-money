@@ -1,7 +1,7 @@
 {
-  "name": "sequelize-ts-example",
+  "name": "money-node",
   "version": "1.0.0",
-  "description": "The egg ts example project that uses egg-sequelize plugin.",
+  "description": "",
   "private": true,
   "dependencies": {
     "egg": "^2.10.0",
@@ -30,8 +30,10 @@
     "cov": "egg-bin cov",
     "ci": "npm run cov",
     "autod": "autod",
-    "sequelize": "sequelize --"
+    "sequelize": "sequelize --",
+    "db:migrate": "sequelize -- db:migrate",
+    "db:undo": "sequelize -- db:migrate:undo",
+    "db:create": "sequelize migration:generate"
   },
-  "author": "Qi Yu <njuyuqi@gmail.coom>",
   "license": "MIT"
 }

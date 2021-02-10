@@ -6,7 +6,11 @@ export default function() {
   const config = {} as PowerPartial<EggAppConfig>;
 
   config.sequelize = {
-    database: 'egg-sequelize-ts-unittest',
+    database: 'money_test',
+    dialect: 'mysql',
+    host: '127.0.0.1',
+    password: 'kcvo',
+    port: 3306
   };
 
   return config;
