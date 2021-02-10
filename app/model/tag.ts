@@ -4,25 +4,23 @@ import { Application } from 'egg';
 
 export default function(app: Application) {
   const { STRING, INTEGER, DATE } = app.Sequelize;
-  const User = app.model.define('user', {
+  const Tag = app.model.define('user', {
     id: {
       type: INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    name: {
       type: STRING(30),
       unique: true
     },
-    password_digest: STRING,
     created_at: DATE(6),
     updated_at: DATE(6),
   });
 
-  return class extends User {
+  return class extends Tag {
     static associate() {
-      app.model.User.hasMany(app.model.Record, { as: 'records' });
-      app.model.User.hasMany(app.model.Tag, { as: 'tags' });
+      app.model.Tag.belongsTo(app.model.User, { as: 'user', foreignKey: 'user_id' });
     }
   };
 }
