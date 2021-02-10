@@ -1,23 +1,22 @@
-import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+'use strict';
 
-export default (appInfo: EggAppInfo) => {
+import { EggAppConfig, PowerPartial } from 'egg';
+
+export default function(appInfo: EggAppConfig) {
   const config = {} as PowerPartial<EggAppConfig>;
 
-  // override config from framework / plugin
-  // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1612863665154_5333';
+  config.keys = appInfo.name + '123123';
 
-  // add your egg config in here
-  config.middleware = [];
-
-  // add your special config in here
-  const bizConfig = {
-    sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+  config.sequelize = {
+    database: 'egg-sequelize-ts-dev',
   };
 
-  // the return config will combines to EggAppConfig
+  const bizConfig = {
+    // your biz config
+  };
+
   return {
-    ...config,
+    ...config as {},
     ...bizConfig,
   };
-};
+}

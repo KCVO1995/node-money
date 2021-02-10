@@ -7,9 +7,11 @@
     "noImplicitAny": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
     "charset": "utf8",
     "allowJs": false,
     "pretty": true,
+    "lib": ["es6", "dom"],
     "noEmitOnError": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -17,14 +19,6 @@
     "allowUnusedLabels": false,
     "strictPropertyInitialization": false,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "inlineSourceMap": true,
-    "importHelpers": true
-  },
-  "exclude": [
-    "app/public",
-    "app/views",
-    "node_modules*"
-  ]
+    "inlineSourceMap": true
+  }
 }
