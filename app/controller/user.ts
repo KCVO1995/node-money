@@ -34,20 +34,10 @@ export default class UserController extends Controller {
     }
   }
 
-  // 获取所有用户
-  async index() {
-    const { ctx } = this;
-    ctx.body = await ctx.service.user.getUser();
-  }
-
   // 通过id获取用户
   async show() {
     const { ctx } = this;
     ctx.body = await ctx.service.user.getUser(ctx.params.id);
   }
 
-  async getMd5Data() {
-    const { ctx } = this;
-    ctx.body = await ctx.service.user.getMd5Data(ctx.params.data);
-  }
 }
