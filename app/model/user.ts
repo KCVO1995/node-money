@@ -24,5 +24,10 @@ export default function(app: Application) {
       app.model.User.hasMany(app.model.Record, { as: 'records' });
       app.model.User.hasMany(app.model.Tag, { as: 'tags' });
     }
+    static async findByUsername(username: string) {
+      return await this.findOne({
+        where: { username }
+      });
+    }
   };
 }

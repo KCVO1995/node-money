@@ -1,41 +1,47 @@
 'use strict';
 
-import { Controller } from 'egg';
+import {Controller} from 'egg'
 
 export default class UserController extends Controller {
-  async index() {
+  // 注册
+  async register() {
     const ctx = this.ctx;
-    const query = {
-      limit: ctx.helper.parseInt(ctx.query.limit),
-      offset: ctx.helper.parseInt(ctx.query.offset),
-    };
-    ctx.body = await ctx.service.user.list(query);
-  }
-
-  async show() {
-    const ctx = this.ctx;
-    ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
-  }
-
-  async create() {
-    const ctx = this.ctx;
+    const {username, password, passwordConfirmation} = ctx.request.body
+    const result = await ctx.service.user.validRegisterUser(username, password, passwordConfirmation);
+    if (ctx.service.user.hasError(result)) {
+      ctx.status = 422;
+      ctx.body = result
+      return
+    }
     const user = await ctx.service.user.create(ctx.request.body);
     ctx.status = 201;
-    ctx.body = user;
+    ctx.body = JSON.stringify(user);
   }
-
-  async update() {
-    const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
-    const body = ctx.request.body;
-    ctx.body = await ctx.service.user.update({ id, updates: body });
+  // 登录
+  async login() {
+    const { ctx, app } = this;
+    const data = ctx.request.body;
+    // 判断该用户是否存在并且密码是否正确
+    const isValidUser = await ctx.service.user.validUser(data.username, data.password);
+    if (isValidUser) {
+      const token = app.jwt.sign({ username: data.username }, app.config.jwt.secret);
+      ctx.body = { code: 200, msg: '登录成功', token };
+    } else {
+      ctx.body = { code: 400, msg: '登录失败' };
+    }
   }
-
-  async destroy() {
-    const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
-    await ctx.service.user.del(id);
-    ctx.status = 200;
+  // 获取所有用户
+  async index() {
+    const { ctx } = this;
+    ctx.body = await ctx.service.user.getUser();
+  }
+  // 通过id获取用户
+  async show() {
+    const { ctx } = this;
+    ctx.body = await ctx.service.user.getUser(ctx.params.id);
+  }
+  async getMd5Data() {
+    const { ctx } = this;
+    ctx.body = await ctx.service.user.getMd5Data(ctx.params.data);
   }
 }
-

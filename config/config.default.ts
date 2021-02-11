@@ -14,6 +14,10 @@ export default function(appInfo: EggAppConfig) {
     password: 'kcvo',
     port: 3306
   };
+  config.jwt = {
+    // TODO secret 怎么弄
+    secret: "123456"
+  };
   config.security = {
     csrf: {
       enable: false,

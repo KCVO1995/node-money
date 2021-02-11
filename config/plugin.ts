@@ -8,5 +8,9 @@ plugin.sequelize = {
   package: 'egg-sequelize',
   enable: true,
 };
+plugin.jwt = {
+  enable: true,
+  package: "egg-jwt"
+};
 
 export default plugin;
