@@ -9,9 +9,13 @@ import { Application } from 'egg';
 export default function(app: Application) {
   const { router, controller } = app;
 
-  router.post('/users/register', controller.user.register);
-
-  router.post('/users/login', controller.user.login);
+  // user -------------
+  router.post('/api/users/register', controller.user.register);
+  router.post('/api/users/login', controller.user.login);
   // @ts-ignore
-  router.get('/users/:id', app.jwt, controller.user.show);
+  router.get('/api/users/:id', app.jwt, controller.user.show);
+
+  // tag --------------
+  // @ts-ignore
+  router.resources('tags','/api/tags', app.jwt, controller.tags);
 }

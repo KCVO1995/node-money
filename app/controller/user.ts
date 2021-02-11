@@ -1,6 +1,8 @@
 'use strict';
 
 import { Controller } from 'egg';
+import { User } from '../../typings';
+import * as md5 from 'md5';
 
 export default class UserController extends Controller {
   // 注册
@@ -20,18 +22,16 @@ export default class UserController extends Controller {
 
   // 登录
   async login() {
-    console.log('login');
     const { ctx, app } = this;
     const { username, password } = ctx.request.body;
-    // 判断该用户是否存在并且密码是否正确
-    const isValidUser = await ctx.service.user.validUser(username, password);
-    if (isValidUser) {
-      const token = app.jwt.sign({ username: username }, app.config.jwt.secret);
-      ctx.status = 200;
-      ctx.body = { code: 200, msg: '登录成功', token };
-    } else {
-      ctx.body = { 'errors': ['登录失败']};
+    const users = await ctx.service.user.getUser() || [] as User[];
+    const currentUser = users.find((user: User) => user.username === username && user.password_digest === md5(password));
+    if (!currentUser) {
+      ctx.throw(401);
     }
+    const token = app.jwt.sign({ id: currentUser.id }, app.config.jwt.secret);
+    ctx.status = 200;
+    ctx.body = { code: 200, msg: '登录成功', token };
   }
 
   // 通过id获取用户
