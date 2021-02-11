@@ -16,7 +16,6 @@
     "autod": "^3.0.1",
     "egg-bin": "^4.8.1",
     "egg-mock": "^3.19.2",
-    "factory-girl": "^5.0.2",
     "lodash": "^4.17.10",
     "sequelize-cli": "^5.0.0"
   },
@@ -29,7 +28,7 @@
   },
   "scripts": {
     "dev": "egg-bin dev",
-    "test": "NODE_ENV=test npm run sequelize -- db:migrate && egg-bin test",
+    "test": "set NODE_ENV=test npm run sequelize -- db:migrate && egg-bin test",
     "cov": "egg-bin cov",
     "ci": "npm run cov",
     "autod": "autod",

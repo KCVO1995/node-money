@@ -10,11 +10,11 @@ export default function(app: Application) {
   // app.resources('posts', '/posts', app.controller.post);
   const { router, controller } = app;
 
-  router.post('/user/login', controller.user.login);
-  router.post('/user/register', controller.user.register);
+  router.post('/users/login', controller.user.login);
+  router.post('/users/register', controller.user.register);
   // 查询
-  router.get('/user', controller.user.index);
+  router.get('/users', controller.user.index);
   // router.get('/user/:id', jwt, controller.user.show);
   // 生成经过md5加密后的密文
-  router.get('/user/getMd5/:data', controller.user.getMd5Data);
+  router.get('/users/getMd5/:data', controller.user.getMd5Data);
 }

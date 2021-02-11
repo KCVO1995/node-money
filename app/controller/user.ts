@@ -14,8 +14,8 @@ export default class UserController extends Controller {
       return
     }
     const user = await ctx.service.user.create(ctx.request.body);
-    ctx.status = 201;
-    ctx.body = JSON.stringify(user);
+    ctx.status = 200;
+    ctx.body = user;
   }
   // 登录
   async login() {
