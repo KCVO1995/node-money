@@ -1,9 +1,12 @@
-type Errors = {
-  [key: string]: string[]
-}
+import { User } from '../../typings';
 // HASH 怎么处理
 import { Service } from 'egg';
 import * as md5 from 'md5';
+
+type Errors = {
+  [key: string]: string[]
+}
+
 function toInt(str) {
   if (typeof str === 'number') return str;
   if (!str) return str;
@@ -36,14 +39,8 @@ class UserService extends Service {
   }
   // 查询user表，验证密码和花名
   async validUser(username, password) {
-    const data = await this.getUser();
-    const pwd = md5(password);
-    // @ts-ignore
-    for (const item of data) {
-      // @ts-ignore
-      if (item.username === username && item.password === pwd) return true;
-    }
-    return false;
+    const data = await this.getUser() as User[] | null;
+    return data && data.find((user: User) => user.username === username && user.password_digest === md5(password))
   }
   // 获取用户，不传id则查询所有
   async getUser(id?) {
