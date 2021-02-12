@@ -5,7 +5,7 @@ import { Application } from 'egg';
 // 注册接口
 // 登录接口
 // TODO 记账记录
-// TODO tag
+// tag
 export default function(app: Application) {
   const { router, controller } = app;
 
@@ -18,4 +18,8 @@ export default function(app: Application) {
   // tag --------------
   // @ts-ignore
   router.resources('tags','/api/tags', app.jwt, controller.tags);
+
+  // record --------------
+  // @ts-ignore
+  router.resources('records','/api/records', app.jwt, controller.records);
 }
