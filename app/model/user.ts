@@ -17,12 +17,16 @@ export default function(app: Application) {
     password_digest: STRING,
     created_at: DATE(6),
     updated_at: DATE(6),
+  },{
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   });
 
   return class extends User {
     static associate() {
-      app.model.User.hasMany(app.model.Record, { as: 'records' });
-      app.model.User.hasMany(app.model.Tag, { as: 'tags' });
+      app.model.User.hasMany(app.model.Record);
+      app.model.User.hasMany(app.model.Tag);
     }
     static async findByUsername(username: string) {
       return await this.findOne({
