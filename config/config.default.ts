@@ -24,7 +24,11 @@ export default function(appInfo: EggAppConfig) {
       ignoreJSON: true
     },
     // 允许访问接口的白名单
-    domainWhiteList: ['*'] // ['http://localhost:8080']
+    domainWhiteList: ['http://localhost:8080'] // ['http://localhost:8080']
+  }
+
+  config.cors = {
+    credentials: true,
   }
 
   const bizConfig = {

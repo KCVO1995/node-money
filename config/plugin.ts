@@ -12,5 +12,9 @@ plugin.jwt = {
   enable: true,
   package: "egg-jwt"
 };
+plugin.cors = {
+  enable: true,
+  package: "egg-cors"
+};
 
 export default plugin;
