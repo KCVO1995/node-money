@@ -52,11 +52,14 @@ export default class PostController extends Controller {
   //   ctx.body = await ctx.service.post.update({ id, user_id: ctx.request.body.user_id, updates });
   // }
   //
-  // async destroy() {
-  //   const ctx = this.ctx;
-  //   const id = ctx.helper.parseInt(ctx.params.id);
-  //   const user_id = ctx.helper.parseInt(ctx.request.body.user_id);
-  //   await ctx.service.post.destroy({ id, user_id });
-  //   ctx.status = 200;
-  // }
+  async destroy() {
+    const ctx = this.ctx;
+    const id = ctx.helper.parseInt(ctx.params.id);
+    const currentUser = this.ctx.state.user;
+    console.log(id, currentUser, 'ddd');
+    const willDestroyTag = await ctx.model.Tag.findOne({ where: { id, user_id: currentUser.id } });
+    console.log(willDestroyTag, 'ssss');
+    willDestroyTag && willDestroyTag.destroy();
+    ctx.status = 200;
+  }
 }
