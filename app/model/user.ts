@@ -24,6 +24,7 @@ export default function(app: Application) {
   });
 
   return class extends User {
+    id: any;
     static associate() {
       app.model.User.hasMany(app.model.Record);
       app.model.User.hasMany(app.model.Tag);

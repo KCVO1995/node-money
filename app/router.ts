@@ -13,7 +13,7 @@ export default function(app: Application) {
   router.post('/api/users/register', controller.user.register);
   router.post('/api/users/login', controller.user.login);
   // @ts-ignore
-  router.get('/api/users/:id', app.jwt, controller.user.show);
+  router.get('/api/user', app.jwt, controller.user.show);
 
   // tag --------------
   // @ts-ignore

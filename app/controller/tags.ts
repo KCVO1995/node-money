@@ -3,14 +3,18 @@
 import { Controller } from 'egg';
 
 export default class PostController extends Controller {
-  // async index() {
-  //   const ctx = this.ctx;
-  //   const query = {
-  //     limit: ctx.helper.parseInt(ctx.query.limit),
-  //     offset: ctx.helper.parseInt(ctx.query.offset),
-  //   };
-  //   ctx.body = await ctx.service.post.list(query);
-  // }
+  async index() {
+    const ctx = this.ctx;
+    const currentUser = this.ctx.state.user;
+    if (currentUser) {
+      ctx.status = 200;
+      ctx.body = await ctx.model.Tag.findAll({ where: { user_id: currentUser.id } });
+    } else {
+      ctx.status = 401;
+      ctx.body = { message: '请登录' };
+    }
+  }
+
   //
   // async show() {
   //   const ctx = this.ctx;
@@ -19,13 +23,16 @@ export default class PostController extends Controller {
 
   async create() {
     const ctx = this.ctx;
-    const {name} = ctx.request.body
+    const { name } = ctx.request.body;
     if (!name) {
       ctx.throw('名字不能为空', 422)
       return
     }
-    const currentUser = this.ctx.state.user
-    const [tag, created] = await ctx.model.Tag.findOrCreate({where: {name}, defaults: {user_id: currentUser.id}})
+    const currentUser = this.ctx.state.user;
+    const [ tag, created ] = await ctx.model.Tag.findOrCreate({
+      where: { name, user_id: currentUser.id },
+      defaults: { user_id: currentUser.id },
+    });
     if (!created) {
       ctx.status = 422;
       ctx.body = {errors: ['标签名重复']};

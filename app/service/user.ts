@@ -30,12 +30,16 @@ class UserService extends Service {
   }
   // 新增用户
   async create(user) {
-    const {username, password} = user
-    const newUser = {
+    const { username, password } = user;
+    const newUser = await this.ctx.model.User.create({
       username,
-      password_digest: md5(password)
-    }
-    return this.ctx.model.User.create(newUser);
+      password_digest: md5(password),
+    });
+    this.ctx.model.Tag.create({ name: '服装', user_id: newUser.id });
+    this.ctx.model.Tag.create({ name: '餐饮', user_id: newUser.id });
+    this.ctx.model.Tag.create({ name: '住房', user_id: newUser.id });
+    this.ctx.model.Tag.create({ name: '交通', user_id: newUser.id });
+    return newUser;
   }
   // 查询user表，验证密码和花名
   async validUser(username, password) {

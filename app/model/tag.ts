@@ -12,7 +12,6 @@ export default function(app: Application) {
     },
     name: {
       type: STRING(30),
-      unique: true
     },
     record_id: INTEGER,
     user_id: INTEGER,
