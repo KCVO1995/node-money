@@ -3,19 +3,14 @@
 import { Controller } from 'egg';
 
 export default class PostController extends Controller {
-  // async index() {
-  //   const ctx = this.ctx;
-  //   const query = {
-  //     limit: ctx.helper.parseInt(ctx.query.limit),
-  //     offset: ctx.helper.parseInt(ctx.query.offset),
-  //   };
-  //   ctx.body = await ctx.service.post.list(query);
-  // }
-  //
-  // async show() {
-  //   const ctx = this.ctx;
-  //   ctx.body = await ctx.service.post.find(ctx.helper.parseInt(ctx.params.id));
-  // }
+  async index() {
+    const ctx = this.ctx;
+    const query = {
+      start_at: ctx.query.start_at,
+      end_at: ctx.query.end_at,
+    };
+    ctx.body = await ctx.service.record.list(query);
+  }
 
   async create() {
     const ctx = this.ctx;
