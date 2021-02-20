@@ -11,7 +11,7 @@ export default function(app: Application) {
       primaryKey: true,
       autoIncrement: true,
     },
-    account: DOUBLE,
+    amount: DOUBLE,
     is_expend: BOOLEAN,
     note: STRING,
     tag_id: INTEGER,

@@ -19,27 +19,57 @@ export default class PostController extends Controller {
 
   async create() {
     const ctx = this.ctx;
-    const {tag_id, amount} = ctx.request.body
-    const result = await ctx.service.record.validate({tag_id, amount})
+    const { tag_id, amount, note, is_expend } = ctx.request.body;
+    const result = await ctx.service.record.validate({ tag_id, amount });
     if (result.length > 0) {
       ctx.status = 422;
-      ctx.body = {result};
-      return
+      ctx.body = { result };
+      return;
     }
-    const record = await ctx.service.record.create(ctx.request.body)
+    const currentUser = this.ctx.state.user;
+    const newRecord = {
+      amount,
+      note,
+      is_expend,
+      tag_id,
+      user_id: currentUser.id,
+    };
+    const record = await ctx.service.record.create(newRecord);
     ctx.status = 201;
     ctx.body = record;
   }
 
-  // async update() {
-  //   const ctx = this.ctx;
-  //   const id = ctx.params.id;
-  //   const updates = {
-  //     title: ctx.request.body.title,
-  //     content: ctx.request.body.content,
-  //   };
-  //   ctx.body = await ctx.service.post.update({ id, user_id: ctx.request.body.user_id, updates });
-  // }
+  async update() {
+    const ctx = this.ctx;
+    const id = ctx.helper.parseInt(ctx.params.id);
+    const { amount, note, is_expend, tag_id } = ctx.request.body;
+    const result = await ctx.service.record.validate({ tag_id, amount });
+    if (result.length > 0) {
+      ctx.status = 422;
+      ctx.body = { result };
+      return;
+    }
+    const updates = {
+      amount,
+      note,
+      is_expend,
+      tag_id,
+    };
+    console.log(updates, 'update');
+    ctx.body = await ctx.service.record.update({ id, updates });
+  }
+
+  async show() {
+    const ctx = this.ctx;
+    const id = ctx.helper.parseInt(ctx.params.id);
+    const record = await ctx.service.record.findOne(id);
+    if (record) {
+      ctx.body = record;
+    } else {
+      ctx.throw('记录不存在', 422);
+    }
+  }
+
   //
   // async destroy() {
   //   const ctx = this.ctx;

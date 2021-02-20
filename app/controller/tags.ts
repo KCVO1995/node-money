@@ -35,7 +35,7 @@ export default class PostController extends Controller {
     });
     if (!created) {
       ctx.status = 422;
-      ctx.body = {errors: ['标签名重复']};
+      ctx.body = { message: '标签名重复' };
       return
     }
     ctx.status = 201;
