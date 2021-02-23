@@ -13,17 +13,17 @@ function toInt(str) {
   return parseInt(str, 10) || 0;
 }
 
-class UserService extends Service {
+export default class UserService extends Service {
   // 验证注册信息
   async validRegisterUser(username, password, passwordConfirmation) {
     const errors: Errors = {
       username: [],
       password: [],
-      passwordConfirmation: []
-    }
-    const user = await this.ctx.model.User.findByUsername(username)
-    if (!username) errors.username.push('用户名不能为空')
-    if (user) errors.username.push('用户名已存在')
+      passwordConfirmation: [],
+    };
+    const user = await this.ctx.model.User.findByUsername(username);
+    if (!username) errors.username.push('用户名不能为空');
+    if (user) errors.username.push('用户名已存在');
     if (!password) errors.password.push('密码不能为空')
     if (password !== passwordConfirmation) errors.passwordConfirmation.push('两次密码不相同')
     return errors;
@@ -52,17 +52,12 @@ class UserService extends Service {
     const query = { limit: toInt(ctx.query.limit), offset: toInt(ctx.query.offset) };
 
     if (id) {
-      return await ctx.model.User.findByPk(toInt(id));
+      return ctx.model.User.findByPk(toInt(id));
     }
-    return await ctx.model.User.findAll(query);
+    return ctx.model.User.findAll(query);
   }
   hasError(errors: Errors) {
     const hasError = Object.values(errors).find(value => value.length > 0)
     return hasError && hasError.length > 0
   }
-  // 专门对数据进行md5加密的方法，输入明文返回密文
-  // getMd5Data(data) {
-  //   return crypto.createHash('md5').update(data).digest('hex');
-  // }
 }
-module.exports = UserService;

@@ -18,7 +18,7 @@ export default function(app: Application) {
     user_id: INTEGER,
     created_at: DATE(6),
     updated_at: DATE(6),
-  },{
+  }, {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
@@ -35,5 +35,5 @@ export default function(app: Application) {
     //     where: { id, user_id: userId },
     //   });
     // }
-  }
+  };
 }

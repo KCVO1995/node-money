@@ -12,12 +12,12 @@ export default function(app: Application) {
     },
     username: {
       type: STRING(30),
-      unique: true
+      unique: true,
     },
     password_digest: STRING,
     created_at: DATE(6),
     updated_at: DATE(6),
-  },{
+  }, {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
@@ -25,13 +25,15 @@ export default function(app: Application) {
 
   return class extends User {
     id: any;
+
     static associate() {
       app.model.User.hasMany(app.model.Record);
       app.model.User.hasMany(app.model.Tag);
     }
+
     static async findByUsername(username: string) {
-      return await this.findOne({
-        where: { username }
+      return this.findOne({
+        where: { username },
       });
     }
   };

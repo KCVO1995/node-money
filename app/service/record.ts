@@ -12,7 +12,7 @@ export default class Record extends Service {
   }
 
   async list({ start_at, end_at, is_expend }: { start_at: Date; end_at: Date; is_expend?: boolean }) {
-    const { Record, Tag } = this.ctx.model;
+    const { Tag } = this.ctx.model;
     const query = {
       created_at: {
         [Op.between]: [ start_at, end_at ],
@@ -25,7 +25,7 @@ export default class Record extends Service {
       delete query.is_expend;
     }
 
-    return Record.findAndCountAll({
+    return this.ctx.model.Record.findAndCountAll({
       where: query,
       include: [ {
         model: Tag,
@@ -34,16 +34,16 @@ export default class Record extends Service {
   }
 
   async create(obj) {
-    return await this.ctx.model.Record.create(obj);
+    return this.ctx.model.Record.create(obj);
   }
 
   async findOne(id) {
-    return await this.ctx.model.Record.findByPk(id);
+    return this.ctx.model.Record.findByPk(id);
   }
 
 
   async destroy({ id, userId }) {
-    return await this.ctx.model.Record.destroy({ where: { id, user_id: userId } });
+    return this.ctx.model.Record.destroy({ where: { id, user_id: userId } });
   }
 
   async update({ id, updates }: { id: number; updates: object }) {

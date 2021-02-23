@@ -10,11 +10,11 @@ plugin.sequelize = {
 };
 plugin.jwt = {
   enable: true,
-  package: "egg-jwt"
+  package: 'egg-jwt',
 };
 plugin.cors = {
   enable: true,
-  package: "egg-cors"
+  package: 'egg-cors',
 };
 
 export default plugin;
