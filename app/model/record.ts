@@ -26,8 +26,8 @@ export default function(app: Application) {
 
   return class extends Record {
     static associate() {
-      app.model.Record.belongsTo(app.model.User, {foreignKey: 'user_id' });
-      app.model.Record.hasOne(app.model.Tag);
+      app.model.Record.belongsTo(app.model.User, { foreignKey: 'user_id' });
+      app.model.Record.belongsTo(app.model.Tag);
     }
 
     // static async findByIdWithUser(id: number, userId: number) {

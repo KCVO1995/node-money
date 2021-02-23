@@ -25,8 +25,8 @@ export default function(app: Application) {
 
   return class extends Tag {
     static associate() {
-      app.model.Tag.belongsTo(app.model.User, {foreignKey: 'user_id' });
-      app.model.Tag.hasMany(app.model.Record);
+      app.model.Tag.belongsTo(app.model.User, { foreignKey: 'user_id' });
+      app.model.Tag.hasMany(app.model.Record, { as: 'Records' });
     }
   };
 }

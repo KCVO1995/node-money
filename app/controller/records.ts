@@ -5,9 +5,11 @@ import { Controller } from 'egg';
 export default class PostController extends Controller {
   async index() {
     const ctx = this.ctx;
+    const { start_at, end_at, is_expend } = ctx.query;
     const query = {
-      start_at: ctx.query.start_at,
-      end_at: ctx.query.end_at,
+      start_at: new Date(start_at || '2000-01-01'),
+      end_at: end_at ? new Date(end_at) : new Date(),
+      is_expend: is_expend ? is_expend === 'true' : undefined,
     };
     ctx.body = await ctx.service.record.list(query);
   }

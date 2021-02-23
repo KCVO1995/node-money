@@ -11,13 +11,25 @@ export default class Record extends Service {
     return errors;
   }
 
-  async list({ start_at = new Date('2000-01-01'), end_at = new Date() }: { start_at: Date; end_at: Date; }) {
-    return this.ctx.model.Record.findAndCountAll({
-      where: {
-        created_at: {
-          [Op.between]: [ start_at, end_at ],
-        },
+  async list({ start_at, end_at, is_expend }: { start_at: Date; end_at: Date; is_expend?: boolean }) {
+    const { Record, Tag } = this.ctx.model;
+    const query = {
+      created_at: {
+        [Op.between]: [ start_at, end_at ],
       },
+      is_expend,
+    };
+
+    if (is_expend === undefined) {
+      // @ts-ignore
+      delete query.is_expend;
+    }
+
+    return Record.findAndCountAll({
+      where: query,
+      include: [ {
+        model: Tag,
+      } ],
     });
   }
 
