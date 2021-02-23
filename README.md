@@ -44,8 +44,15 @@ mysql -u root -p
 ```
 
 ### 初始化数据库
+
 ```bash
 CREATE DATABASE money_development CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE money_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
+### docker
+
+```bash
+docker build -t node-money/node-web-app .
+docker run -p 7001:7001 -d node-money/node-web-app
+```
