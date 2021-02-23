@@ -67,12 +67,11 @@ export default class PostController extends Controller {
     }
   }
 
-  //
-  // async destroy() {
-  //   const ctx = this.ctx;
-  //   const id = ctx.helper.parseInt(ctx.params.id);
-  //   const user_id = ctx.helper.parseInt(ctx.request.body.user_id);
-  //   await ctx.service.post.destroy({ id, user_id });
-  //   ctx.status = 200;
-  // }
+  async destroy() {
+    const ctx = this.ctx;
+    const id = ctx.helper.parseInt(ctx.params.id);
+    const currentUser = this.ctx.state.user;
+    await ctx.service.record.destroy({ id, userId: currentUser.id });
+    ctx.status = 200;
+  }
 }

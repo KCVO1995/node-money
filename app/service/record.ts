@@ -41,6 +41,11 @@ export default class Record extends Service {
     return await this.ctx.model.Record.findByPk(id);
   }
 
+
+  async destroy({ id, userId }) {
+    return await this.ctx.model.Record.destroy({ where: { id, user_id: userId } });
+  }
+
   async update({ id, updates }: { id: number; updates: object }) {
     const record = await this.ctx.model.Record.findByPk(id);
     if (!record) this.ctx.throw(404, 'record not found');
