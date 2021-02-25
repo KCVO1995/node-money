@@ -7,8 +7,8 @@
 ### Development
 
 ```bash
-$ npm i
-$ npm run dev
+$ yarn install
+$ yarn dev
 $ open http://localhost:7001/
 ```
 
@@ -17,8 +17,8 @@ Don't tsc compile at development mode, if you had run `tsc` then you need to `np
 ### Deploy
 
 ```bash
-$ npm run tsc
-$ npm start
+$ yarn tsc
+$ yarn start
 ```
 
 ### Npm Scripts
@@ -50,9 +50,9 @@ CREATE DATABASE money_development CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_
 CREATE DATABASE money_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-### docker
+### online
 
 ```bash
-docker build -t node-money/node-web-app .
-docker run -p 7001:7001 -d node-money/node-web-app
+docker run --name money -v "/home/lyh/money-data":/var/lib/mysql -p 3307:3306 -e MYSQL_ROOT_PASSWORD=kcvo -d mysql:5.7
+pm2 start npm --name 'money' -- run start
 ```

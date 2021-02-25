@@ -12,7 +12,7 @@ export default function(appInfo: EggAppConfig) {
     dialect: 'mysql',
     host: '127.0.0.1',
     password: 'kcvo',
-    port: 3306,
+    port: 3307,
   };
   config.jwt = {
     // TODO secret 怎么弄
